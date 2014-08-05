@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.omidbiz</groupId>
+	<artifactId>seam</artifactId>
+	<version>0.1</version>
+	<packaging>pom</packaging>
+
+	<name>Seam 2 EE 6 examples</name>
+	<description>Examples for Seam 2 Framework in Java EE6 environment</description>
+	<url>http://seamframework.org/Seam2</url>
+
+	<licenses>
+		<license>
+			<name>LGPL</name>
+			<url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Omid Pourhadi</name>
+		</developer>
+	</developers>
+
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+<repository>
+     <id>omidbiz_repo</id>
+     <url>http://nexus.omidbiz.com/content/sites/omidbiz_repo</url>
+ </repository>
+	</repositories>
+
+
+	<properties>
+		<!-- Excluded TestNG groups (ex: slow annotated tests won't run during 
+			the test phase) -->
+		<tests.excludedGroups>slow</tests.excludedGroups>
+		<guava.version>12.0</guava.version>
+		<slf4j.version>1.6.1</slf4j.version>
+		<version.jbossas7>7.1.1.Final</version.jbossas7>
+		<version.jacoco>0.5.8.201207111220</version.jacoco>
+
+		<!-- dependencies for functional tests -->
+		<ant.junit.version>1.6.2</ant.junit.version>
+		<ftest.version.discriminator />
+		<selenium.browser>*firefoxproxy</selenium.browser>
+		<selenium.browser.url>http://localhost:8080</selenium.browser.url>
+		<selenium.browser.cluster.url>http://localhost:8180</selenium.browser.cluster.url>
+		<selenium.server.port>14444</selenium.server.port>
+		<selenium.server.host>localhost</selenium.server.host>
+		<selenium.speed>0</selenium.speed>
+		<selenium.timeout>30000</selenium.timeout>
+		<selenium.debug>false</selenium.debug>
+		<selenium.log.dir>${project.build.directory}/ftest-logs</selenium.log.dir>
+		<selenium.output.dir>${project.build.directory}/ftest-output</selenium.output.dir>
+		<application.deploy.timeout>300</application.deploy.timeout>
+		<browserSessionReuse>true</browserSessionReuse>
+		<ftest.resources.dir>src/test/resources-ftest</ftest.resources.dir>
+		<context.host>localhost</context.host>
+		<example.context.path>/${project.build.finalName}/</example.context.path>
+		<jboss.master.configuration>${env.JBOSS_HOME}/server/all</jboss.master.configuration>
+		<jboss.home>${env.JBOSS_HOME}</jboss.home>
+		<jboss.domain>default</jboss.domain>
+		<catalina.home>${env.CATALINA_HOME}</catalina.home>
+		<xml.namespace.aware>false</xml.namespace.aware>
+
+		<!-- ************** -->
+		<!-- Build settings -->
+		<!-- ************** -->
+
+		<!-- Cross plugins settings -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- maven-compiler-plugin -->
+		<maven.compiler.target>1.6</maven.compiler.target>
+		<maven.compiler.source>1.6</maven.compiler.source>
+
+		<!-- Options to override the compiler arguments directly on the compiler 
+			arument line to separate between what the IDE understands as the source level 
+			and what the Maven compiler actually use. -->
+		<maven.compiler.argument.target>${maven.compiler.target}</maven.compiler.argument.target>
+		<maven.compiler.argument.source>${maven.compiler.source}</maven.compiler.argument.source>
+
+	</properties>
+
+
+	<build>
+		<defaultGoal>package</defaultGoal>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.12</version>
+					<configuration>
+						<excludedGroups>${tests.excludedGroups}</excludedGroups>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-ear-plugin</artifactId>
+					<version>2.7</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.7</version>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
+
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-dependency-plugin</artifactId>
+										<versionRange>[1.0,)</versionRange>
+										<goals>
+											<goal>unpack</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute>
+											<runOnIncremental>false</runOnIncremental>
+										</execute>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.jboss.as.plugins</groupId>
+					<artifactId>jboss-as-maven-plugin</artifactId>
+					<version>7.3.Final</version>
+					<executions>
+						<execution>
+							<phase />
+							<goals>
+								<goal>deploy</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<artifactId>maven-ejb-plugin</artifactId>
+					<version>2.3</version>
+					<configuration>
+						<ejbVersion>3.0</ejbVersion>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.1.1</version>
+					<inherited>true</inherited>
+					<configuration>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+						<warName>${project.build.finalName}</warName>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- common provided scope dependencies -->
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>1.1.1</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>3.2</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- guava is required by richfaces -->
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<modules>
+		<module>omidbiz-ejb</module>
+		<module>omidbiz-web</module>
+		<module>omidbiz-ear</module>
+	</modules>
+</project>

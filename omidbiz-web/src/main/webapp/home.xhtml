@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+	<h:form>
+    	Customer name : 
+    	<p:inputText value="#{customer.cname}"></p:inputText>
+		<p:commandButton action="#{customerAction.save()}"
+			value="Save A Customer !"></p:commandButton>
+	</h:form>
+
+	<h:dataTable value="#{customerManager.customers}" var="_cust">
+		<h:column>
+			<f:facet name="header">Customer Name</f:facet>
+			<h:outputText value="#{_cust.cname}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">Action</f:facet>
+			<s:link action="#{customerManager.doPrint()}"
+				value="Send CustomerId as param">
+				<f:param name="customerId" value="#{_cust.id}" />
+			</s:link>
+
+		</h:column>
+	</h:dataTable>
+
+</h:body>
+</html>

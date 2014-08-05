@@ -1,0 +1,14 @@
+action.package=org.omidbiz.model
+action.sources=/omidbiz-ejb/src/main/java
+eclipse.preferences.version=1
+model.package=org.omidbiz.model
+model.sources=/omidbiz-ejb/src/main/java
+seam.ejb.project=omidbiz-ejb
+seam.project.connection.profile=DefaultDS
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/omidbiz-web/src/main/webapp
+seam.test.creating=false
+seam.test.project=omidbiz-web
+test.package=org.domain.omidbizweb.test
+test.sources=/omidbiz-web/src/main/java
